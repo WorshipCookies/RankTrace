@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <VlcPackageDir>$([System.IO.Directory]::GetDirectories('$(SolutionDir)packages', 'VLC.Native.*')[0])</VlcPackageDir>
+    <VlcPackage>$([System.IO.Path]::GetFileName('$(VlcPackageDir)'))</VlcPackage>
+    <VlcVersion>$(VlcPackage.Replace('VLC.Native.',''))</VlcVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <VlcFiles Include="$(SolutionDir)packages\VLC.Native.$(VlcVersion)\vlc\**\*.*"/>
+    <Content Include="@(VlcFiles)">
+      <Visible>False</Visible>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>vlc\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Content>
+  </ItemGroup>
+</Project>
